@@ -30,16 +30,29 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Binotify</title>
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<form class="form" method="post" name="login">
-    <h1 class="login-title">Log in</h1>
-    <input type="text" class="login-input" name="username" placeholder="Username" autofocus="true" required/>
-    <input type="password" class="login-input" name="password" placeholder="Password" required/>
-    <input type="submit" value="Log in" name="submit" class="login-button"/>
-    <p class="link">Don't have an account? <a href="signup.php">Sign Up Now</a></p>
-</form>
+    <div class="container">
+        <div class="logo">
+            <img src="assets/Spotify_Logo_RGB_White.png" alt="logo" width="128">
+        </div>
+        <div class="auth-container">
+            <div class="auth-form">
+                <h1 class="title">Log in to continue.</h1>
+                <form method="post" name="login">
+                    <div class="input-form">
+                        <input type="text" id="login-username" name="username" placeholder="Username" autofocus required>
+                    </div>
+                    <div class="input-form">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <input type="submit" value="LOG IN" name="submit"">
+                    <p class="link">Don't have an account? <a href="signup.php">Sign Up</a>.</p>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
