@@ -6,13 +6,13 @@
                 </div>
                 <div class='navbar-rightend'>
                     <div class='navbar-middle'>
-                        <a href='/'>
+                        <a href='/index.php'>
                             Home
                         </a>
                         <form action='search.php' method='get'>
                             <input class='searchbar' type='text' name='search' placeholder='What do you want to search?'>
                         </form>
-                        <a href='/'>
+                        <a href='/daftaralbum.php'>
                             Albums
                         </a>
                     </div>
