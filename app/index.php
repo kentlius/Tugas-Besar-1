@@ -1,10 +1,10 @@
 <?php
-    require('template/navbar.php');
-    require('connect.php');
+session_start();
+require('template/navbar.php');
+require('connect.php');
 
-    $query = $conn->query("SELECT * FROM song ORDER BY tanggal_terbit DESC LIMIT 10");
-    $songs = $query->fetchAll(PDO::FETCH_ASSOC);
-
+$query = $conn->query("SELECT * FROM song ORDER BY tanggal_terbit DESC LIMIT 10");
+$songs = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <DOCTYPE html>
@@ -14,14 +14,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binotify</title>
-    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="css/globals.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <div class="top-container">
-        <?php 
-        navbar(); 
-
-        ?>
+        <?php navbar(); ?>
         <div class="main">
             <h1>Binotify</h1>
             <div id='song-container' class='song-container'>
@@ -42,4 +40,3 @@
     </div>
 </body>
 </html>
-

@@ -10,7 +10,6 @@ require("session/admin_auth.php");
     <title>Users List - Binotify</title>
     <link rel="stylesheet" href="css/globals.css">
     <link rel="stylesheet" href="css/users.css">
-    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <?php

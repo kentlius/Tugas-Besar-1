@@ -3,24 +3,22 @@ session_start();
 require('connect.php');
 require('template/navbar.php');
 
-$result = $conn->query("SELECT judul,penyanyi, tanggal_terbit, genre  FROM album");
+$result = $conn->query("SELECT judul, penyanyi, tanggal_terbit, genre FROM album");
 $albums = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Album</title>
-    <link rel="stylesheet" href="daftaralbum.css"/>
+    <title>Albums - Binotify</title>
+    <link rel="stylesheet" href="css/globals.css">
+    <link rel="stylesheet" href="css/albums.css">
 </head>
 <body>
     <div class="top-container">
-        <?php 
-        navbar(); 
-        ?>
+        <?php navbar(); ?>
     </div>
     <div class="main">
         <h1>Daftar Album</h1>
@@ -40,6 +38,5 @@ $albums = $result->fetchAll(PDO::FETCH_ASSOC);
             <?php endforeach; ?>
         </div>
     </div>
-    
 </body>
 </html>
