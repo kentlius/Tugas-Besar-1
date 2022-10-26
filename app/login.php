@@ -1,17 +1,17 @@
 <?php
 session_start();
-require('connect.php');    
+require('connect.php');
 if (isset($_POST['submit'])) {
     $username = stripslashes($_REQUEST['username']);
     $password = stripslashes($_REQUEST['password']);
-    $result = $conn->query("SELECT password, isAdmin FROM \"user\" WHERE username='$username'");
+    $result = $conn->query("SELECT password, isAdmin FROM users WHERE username='$username'");
     $fetch_array = $result->fetch(PDO::FETCH_ASSOC) ?? '';
     $hash = $fetch_array['password'];
     $role = $fetch_array['isadmin'];
     if (password_verify($password, $hash)) {
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $role;
-        if($role === true) {
+        if ($role === true) {
             header("Location: admin.php");
         } else {
             header("Location: /");
@@ -31,12 +31,12 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Binotify</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
     <div class="container">
         <div class="logo">
-            <img src="assets/Spotify_Logo_RGB_White.png" alt="logo" width="128">
+            <img src="img/Spotify_Logo_RGB_White.png" alt="logo" width="128">
         </div>
         <div class="auth-container">
             <div class="auth-form">
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
                         <input type="password" name="password" placeholder="Password" required>
                     </div>
                     <input type="submit" value="LOG IN" name="submit"">
-                    <p class="link">Don't have an account? <a href="signup.php">Sign Up</a>.</p>
+                    <p class=" link">Don't have an account? <a href="signup.php">Sign Up</a>.</p>
                 </form>
             </div>
         </div>

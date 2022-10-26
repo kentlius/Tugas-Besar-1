@@ -2,9 +2,9 @@ version: '3.3'
 services:
   web:
     build:
-      context: app
+      context: .
     ports:
-      - 80:80
+      - 8080:80
     volumes:
       - ./app:/var/www/html/
     depends_on:
@@ -16,9 +16,9 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=binotify
     ports:
-      - 5432:5432
+      - 6543:5432
     volumes:
       - db-data:/var/lib/postgresql/data
-      - ./db/binotify.sql:/docker-entrypoint-initdb.d/binotify.sql
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
 volumes:
   db-data: 

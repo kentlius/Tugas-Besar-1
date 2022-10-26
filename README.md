@@ -28,11 +28,11 @@ atau
 bash scripts/run-compose.sh
 ```
 
-Lalu buka http://localhost/
+Lalu buka http://localhost:8080/
 
 ## Screenshot
 
-![404](/img/404.jpg "404")
+![404](screenshots/404.jpg "404")
 
 ## Pembagian Tugas
 

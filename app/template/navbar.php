@@ -2,7 +2,7 @@
     function navbar() {
         echo "<div class='navbar'>
                 <div class='navbar-left'>
-                    <a href='/'><img src='assets/Spotify_Logo_RGB_White.png' alt='logo' width='128'></a>
+                    <a href='/'><img src='img/Spotify_Logo_RGB_White.png' alt='logo' width='128'></a>
                 </div>
                 <div class='navbar-rightend'>
                     <div class='navbar-middle'>
@@ -27,4 +27,3 @@
                 </div>
             </div>";
     }
-?>

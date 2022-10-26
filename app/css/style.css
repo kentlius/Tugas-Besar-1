@@ -78,3 +78,10 @@ a {
   text-decoration: underline;
   color: white;
 }
+
+table,
+th,
+td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
