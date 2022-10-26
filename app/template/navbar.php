@@ -9,11 +9,11 @@
                         <a href='/'>
                             Home
                         </a>
+                        <form action='search.php' method='get'>
+                            <input class='searchbar' type='text' name='search' placeholder='What do you want to search?'>
+                        </form>
                         <a href='/'>
-                            Search
-                        </a>
-                        <a href='/'>
-                            Lib
+                            Albums
                         </a>
                     </div>
                     <div class='navbar-right'>
