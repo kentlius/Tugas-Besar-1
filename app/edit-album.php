@@ -14,19 +14,19 @@
         if(!empty($_POST) && !isset($_POST['delete-album'])) {
             foreach($_POST as $key => $value){
                 if($key == 'judul'){
-                    $conn->query("UPDATE album SET judul = '$value' WHERE album_id = $album_id");
+                    $conn->exec("UPDATE album SET judul = '$value' WHERE album_id = $album_id");
                 } elseif($key == 'tanggal_terbit'){
-                    $conn->query("UPDATE album SET tanggal_terbit = '$value' WHERE album_id = '$album_id'");
+                    $conn->exec("UPDATE album SET tanggal_terbit = '$value' WHERE album_id = '$album_id'");
                 } elseif($key == 'penyanyi'){
-                    $conn->query("UPDATE album SET penyanyi = '$value' WHERE album_id = '$album_id'");
+                    $conn->exec("UPDATE album SET penyanyi = '$value' WHERE album_id = '$album_id'");
                 } elseif($key == 'image_path'){
-                    $conn->query("UPDATE album SET image_path = '$value' WHERE album_id = '$album_id'");
+                    $conn->exec("UPDATE album SET image_path = '$value' WHERE album_id = '$album_id'");
                 }
             }
 
             if(isset($_POST['delete'])){
                 foreach($_POST['delete'] as $key => $value){
-                    $conn->query("UPDATE song SET album_id = NULL WHERE song_id = '$value'");
+                    $conn->exec("UPDATE song SET album_id = NULL WHERE song_id = '$value'");
                 }
             }
             $albums = $conn->query("SELECT * FROM album WHERE album_id = '$album_id'")->fetch(PDO::FETCH_ASSOC);
