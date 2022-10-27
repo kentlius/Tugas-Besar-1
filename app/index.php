@@ -24,7 +24,14 @@ $songs = $query->fetchAll(PDO::FETCH_ASSOC);
             <h1>Binotify</h1>
             <div id='song-container' class='song-container'>
                 <?php foreach ($songs as $song) : ?>
-                    <?php $album = $conn->query("SELECT judul FROM album WHERE album_id = " . $song['album_id'])->fetch(PDO::FETCH_ASSOC); ?>
+                    <?php 
+                        if($song['album_id'] != NULL){
+                            $album = $conn->query("SELECT * FROM album WHERE album_id = '$song[album_id]'")->fetch(PDO::FETCH_ASSOC);
+                            $album_name = $album['judul'];
+                        }else{
+                            $album_name = 'Tidak ada album';
+                        }
+                    ?>
                     <div class='song'>
                         <a href="detailLagu.php?song_id=<?php echo $song['song_id']; ?>">
                             <div class='song-img'>
@@ -33,7 +40,7 @@ $songs = $query->fetchAll(PDO::FETCH_ASSOC);
                             <div class='song-info'>
                                 <h2><?php echo $song['judul']; ?></h2>
                                 <p><?php echo substr($song['tanggal_terbit'], 0, 4), " &#8226 ", $song['penyanyi']; ?></p>
-                                <p><?php echo $album['judul'] ?></p>
+                                <p><?php echo $album_name ?></p>
                             </div>
                         </a>
                     </div>

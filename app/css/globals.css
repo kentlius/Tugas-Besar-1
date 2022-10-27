@@ -51,6 +51,7 @@ body {
 
 .form-searchbar {
   width: 15vw;
+  padding-top: 12px;
 }
 
 .search-bar {
@@ -58,6 +59,7 @@ body {
   padding: 12px;
   text-overflow: ellipsis;
   width: 15vw;
+  display: block;
 }
 
 .username {

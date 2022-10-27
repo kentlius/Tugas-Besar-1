@@ -101,20 +101,27 @@
             </div>
             <div class="song-container">
                 <?php foreach ($result as $song) : ?>
-                        <?php $album = $conn->query("SELECT judul FROM album WHERE album_id = " . $song['album_id'])->fetch(PDO::FETCH_ASSOC); ?>
-                        <div class='song'>
-                            <a href="song.php?id=<?php echo $song['song_id']; ?>">
-                                <div class='song-img'>
-                                    <img src='<?php echo $song['image_path']; ?>' alt="song image">
-                                </div>
-                                <div class='song-info'>
-                                    <h2><?php echo $song['judul']; ?></h2>
-                                    <p><?php echo substr($song['tanggal_terbit'], 0, 4); ?></p>
-                                    <p><?php echo $song['penyanyi']; ?></p>
-                                    <p><?php echo $album['judul'] ?></p>
-                                </div>
-                            </a>
-                        </div>
+                    <?php 
+                        if($song['album_id'] != NULL){
+                            $album = $conn->query("SELECT * FROM album WHERE album_id = '$song[album_id]'")->fetch(PDO::FETCH_ASSOC);
+                            $album_name = $album['judul'];
+                        }else{
+                            $album_name = 'Tidak ada album';
+                        }
+                    ?>
+                    <div class='song'>
+                        <a href="song.php?id=<?php echo $song['song_id']; ?>">
+                            <div class='song-img'>
+                                <img src='<?php echo $song['image_path']; ?>' alt="song image">
+                            </div>
+                            <div class='song-info'>
+                                <h2><?php echo $song['judul']; ?></h2>
+                                <p><?php echo substr($song['tanggal_terbit'], 0, 4); ?></p>
+                                <p><?php echo $song['penyanyi']; ?></p>
+                                <p><?php echo $album['judul'] ?></p>
+                            </div>
+                        </a>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
