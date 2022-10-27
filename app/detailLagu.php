@@ -1,9 +1,11 @@
 <?php
+    session_start();
     require('connect.php');
     require('template/navbar.php');
     $song_id = $_GET['song_id'];
     $res = $conn->query("SELECT * FROM song WHERE song_id = '$song_id'");
     $song= $res->fetch(PDO::FETCH_ASSOC);
+    $isAdmin = isset($_SESSION["admin"]);
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +29,13 @@
                     <img src="img/back.png" alt="back">
                 </div>
             </a>
+            <?php if ($isAdmin): ?>
+                <a href="edit-lagu.php?song_id=<?= $song['song_id'] ?>">
+                    <div class="gambar_edit">
+                        <img src="img/edit.png" alt="edit">
+                    </div>
+                </a>
+            <?php endif; ?>
         </div>
         <div class="cover">
             <div class="image">
