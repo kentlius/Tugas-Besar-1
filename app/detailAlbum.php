@@ -9,6 +9,7 @@
     $res = $conn->query("SELECT * FROM song WHERE album_id = '$album_id'");
     $songs= $res->fetchAll(PDO::FETCH_ASSOC);
     $jumlah_lagu = $conn->query("SELECT * FROM song WHERE album_id = '$album_id'")->rowCount();
+    $isAdmin = isset($_SESSION["admin"]);
 ?>
 
 <!DOCTYPE html>
@@ -29,12 +30,23 @@
         <?php
             $tahun = substr($albums['tanggal_terbit'], 0, 4);
         ?>
-        <div class="top-bar">
-
+        <div class="back">
+            <a href="albums.php">
+                <div class="gambar_back">
+                    <img src="img/back.png" alt="back">
+                </div>
+            </a>
+            <?php if ($isAdmin): ?>
+                <a class="right" href="edit-album.php?album_id=<?= $albums['album_id'] ?>">
+                    <div class="gambar_edit">
+                        <img src="img/edit.png" alt="edit">
+                    </div>
+                </a>
+            <?php endif; ?>
         </div>
         <div class="cover">
             <div class="image">
-                <img src='img/Spotify_Icon_RGB_Green.png'/>
+                <img src='<?php echo $albums['image_path']; ?>'/>
             </div>
             <div class="album_detail">
                 <?php
@@ -52,15 +64,17 @@
             <?php foreach ($songs as $song): ?>
                 <?php  $minute = floor($song['duration'] / 60);
                     $second = $song['duration'] % 60;?>
-                <div class="lagu">
-                    <div class="num"><?php echo $count; ?></div>
-                    <div class="judul_penyayi">
-                        <div class="judul"><?php echo $song['judul']; ?></div>
-                        <div class="penyanyi"><?php echo $song['penyanyi']; ?></div>
+                <a href="detailLagu.php?song_id=<?= $song['song_id'] ?>">
+                    <div class="lagu">
+                        <div class="num"><?php echo $count; ?></div>
+                        <div class="judul_penyayi">
+                            <div class="judul"><?php echo $song['judul']; ?></div>
+                            <div class="penyanyi"><?php echo $song['penyanyi']; ?></div>
+                        </div>
+                        <div class="durasi"><?php echo $minute,":",$second; ?></div>
+                        <?php $count++; ?>
                     </div>
-                    <div class="durasi"><?php echo $minute,":",$second; ?></div>
-                    <?php $count++; ?>
-                </div>
+                </a>
             <?php endforeach; ?>
         </div>
                   

@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $time = exec("ffmpeg -i " . escapeshellarg($_FILES["song_audio"]["tmp_name"]) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
     list($hms, $milli) = explode('.', $time);
     list($hours, $minutes, $seconds) = explode(':', $hms);
-    $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+    $total_seconds = ((int)$hours * 3600) + ((int)$minutes * 60) + (int)$seconds;
 
     if (file_exists($target_file_audio)) {
         $uploadSongErr = "song already exists.";

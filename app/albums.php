@@ -28,8 +28,8 @@ $albums = $result->fetchAll(PDO::FETCH_ASSOC);
                     $tahun = substr($album['tanggal_terbit'], 0, 4);
                 ?>
                 <div class="album">
-                    <a href="album.php?judul=<?= $album['judul'] ?>">
-                        <img src='<?php echo $album['image_path']?>'>
+                    <a href="detailAlbum.php?album_id=<?= $album['album_id'] ?>">
+                        <img src='<?php echo $album['image_path']; ?>'/>
                         <div class="judul"><?php echo $album['judul']; ?></div>
                         <div class="tahun"><?php echo $tahun," &#8226; ", $album['penyanyi'] ; ?></div>
                         <div class="genre"><?php echo $album['genre']; ?></div>
