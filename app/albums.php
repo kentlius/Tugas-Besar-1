@@ -3,7 +3,7 @@ session_start();
 require('connect.php');
 require('template/navbar.php');
 
-$result = $conn->query("SELECT judul, penyanyi, tanggal_terbit, genre FROM album");
+$result = $conn->query("SELECT * FROM album");
 $albums = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ $albums = $result->fetchAll(PDO::FETCH_ASSOC);
                 ?>
                 <div class="album">
                     <a href="album.php?judul=<?= $album['judul'] ?>">
-                        <img src='img/Spotify_Icon_RGB_Green.png'/>
+                        <img src='<?php echo $album['image_path']?>'>
                         <div class="judul"><?php echo $album['judul']; ?></div>
                         <div class="tahun"><?php echo $tahun," &#8226; ", $album['penyanyi'] ; ?></div>
                         <div class="genre"><?php echo $album['genre']; ?></div>
