@@ -30,7 +30,7 @@ function navbar()
         <a href="/">Home</a>
         <a href="albums.php">Albums</a>
         $admin_link
-        <form action='search.php' method='post'>
+        <form action='search.php' method='get'>
             <input class='search-bar' type='text' name='search' placeholder='What do you want to search?'>
         </form>
         $auth
