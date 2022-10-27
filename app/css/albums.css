@@ -36,6 +36,7 @@
   margin: 5px;
   min-width: 200px;
   min-height: 300px;
+  max-width: 220px;
   display: flex;
   justify-content: center;
 }
@@ -48,15 +49,18 @@
 .album img {
   min-width: 190px;
   min-height: 200px;
-  width: 20vw;
-  height: 20vw;
   object-fit: cover;
   border-radius: 10px;
   background-color: black;
+  max-width: 100%;
+}
+
+.gambar {
+  max-width: 100%;
 }
 
 .judul {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   color: white;
   margin-top: 10px;
