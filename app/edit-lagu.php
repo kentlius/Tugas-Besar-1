@@ -1,4 +1,5 @@
 <?php
+    require('session/admin_auth.php');
     require('connect.php');
     require('template/navbar.php');
     $song_id = $_GET['song_id'];
