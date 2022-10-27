@@ -6,22 +6,20 @@
     
     $res = $conn->query("SELECT * FROM song WHERE song_id = '$song_id'");
     $song = $res->fetch(PDO::FETCH_ASSOC);
-    $album_id= $song['album_id'];
-    $result = $conn->query("SELECT * FROM album WHERE album_id = '$album_id'");
-    $album = $result->fetch(PDO::FETCH_ASSOC);
     $hasil = $conn->query("SELECT * FROM album");
     $albums = $hasil->fetchAll(PDO::FETCH_ASSOC);
     $uploadErr = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST['submit'])){
             $target_dir_img = "uploads/img/";
+            $target_dir_audio = "uploads/audio/";
             $target_file_img = $target_dir_img . basename($_FILES["image_path"]["name"]);
+            $target_file_audio = $target_dir_audio . basename($_FILES["audio_path"]["name"]);
             $new_judul = stripslashes($_POST['judul']);
             $new_tanggal = stripslashes($_POST['tanggal_terbit']);
             $new_genre = stripslashes($_POST['genre']);
-            $new_album = stripslashes($_POST['album']);
-            $new_album_id = $conn->query("SELECT album_id FROM album WHERE album_id = '$new_album'")->fetch(PDO::FETCH_ASSOC)['album_id'];
-            if($target_file_img != $song['image_path']){
+            $new_album_id = stripslashes($_POST['album']);
+            if($target_file_img != $song['image_path'] && $target_file_img != $target_dir_img){
                 $new_image_path = $target_file_img;
                 if (file_exists($target_file_img)) {
                     $uploadImgErr = "img already exists.";
@@ -37,9 +35,23 @@
                 $new_image_path = $song['image_path'];
             }
             
-            $conn->exec("UPDATE song SET judul = '$new_judul', tanggal_terbit = '$new_tanggal', genre = '$new_genre', image_path = '$new_image_path', album_id = '$new_album_id' WHERE song_id = '$song_id'");
+            if($target_file_audio != $song['audio_path'] && $target_file_audio != $target_dir_audio){
+                $new_audio_path = $target_file_audio;
+                if (file_exists($target_file_audio)) {
+                    $uploadSongErr = "song already exists.";
+                } else {
+                    if (move_uploaded_file($_FILES["audio_path"]["tmp_name"], $target_file_audio)) {
+                        $uploadErr = "The file ". htmlspecialchars(basename($_FILES["audio_path"]["name"])). " has been uploaded.";
+                    } else {
+                        $uploadErr = "Sorry, there was an error uploading your file.";
+                    }
+                }
+            }
+            else{
+                $new_audio_path = $song['audio_path'];
+            }
+            $conn->exec("UPDATE song SET judul = '$new_judul', tanggal_terbit = '$new_tanggal', genre = '$new_genre', image_path = '$new_image_path', audio_path= '$new_audio_path', album_id = $new_album_id WHERE song_id = '$song_id'");
             $song= $conn->query("SELECT * FROM song WHERE song_id = '$song_id'")->fetch(PDO::FETCH_ASSOC);
-            $album= $conn->query("SELECT * FROM album WHERE album_id = '$album_id'")->fetch(PDO::FETCH_ASSOC);
             $albums = $conn->query("SELECT * FROM album")->fetchAll(PDO::FETCH_ASSOC);
             header("Location: edit-lagu.php?song_id=$song_id");
         }
@@ -67,14 +79,16 @@
     <div class="top-container">
         <?php navbar(); ?>
     </div>
-    <div class="container">
-        <label for="image_path">Image Path</label>
-        <div class="image">
-            <img src="<?php echo $song['image_path']; ?>" alt="album image">
-        </div>
+    <div class="container">  
         <form method="post" enctype="multipart/form-data">
+            <label for="image_path">Image Path</label>
+            <div class="image">
+                <img src="<?php echo $song['image_path']; ?>" alt="album image">
+            </div>
             <div class="item">
                 <input type="file" name="image_path" id="image_path" accept="image/*">
+                <label for="audio_path">Audio Path</label>
+                <input type="file" name="audio_path" id="audio_path" accept="audio/*">
                 <label for="judul">Judul</label>
                 <input type="text" name="judul" id="judul" value="<?php echo $song['judul']; ?>">
                 <label for="tanggal_terbit">Tanggal Terbit</label>
@@ -85,6 +99,7 @@
                 <select name="album" id="album">
                     <?php foreach ($albums as $item): ?>
                         <option value="<?php echo $item["album_id"]; ?>"><?php echo $item["judul"]; ?></option>
+                        <option value="NULL">None</option>
                     <?php endforeach; ?>
                 </select>
                 <div class="but">
