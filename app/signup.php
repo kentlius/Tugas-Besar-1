@@ -74,7 +74,7 @@ function test_input($data) {
         <div class="auth-container">
             <div class="auth-form">
                 <h1 class="title">Sign up for free to start listening.</h1>
-                <form method="post" name="signup">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="input-form">
                         <input type="text" name="username" placeholder="Username" value="<?php echo $username;?>" autofocus required>
                         <?php echo $usernameErr; ?>
