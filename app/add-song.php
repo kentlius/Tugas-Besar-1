@@ -39,8 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $uploadErr = "Sorry, there was an error uploading your file.";
         }
     }
-
-    $query = "INSERT INTO song (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path, album_id) VALUES ('$song_title', '$artist_name', '$release_date', '$genre', '$total_seconds', '$target_file_audio', '$target_file_img', '$album_id')";
+    if($album_id == "NULL") {
+        $query = "INSERT INTO song (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path) VALUES ('$song_title', '$artist_name', '$release_date', '$genre', '$total_seconds', '$target_file_audio', '$target_file_img')";
+    } else {
+        $query = "INSERT INTO song (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path, album_id) VALUES ('$song_title', '$artist_name', '$release_date', '$genre', '$total_seconds', '$target_file_audio', '$target_file_img', '$album_id')";
+    }
     $conn->exec($query);
 }
 ?>
@@ -95,6 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="album">Album</label>
                 <select name="album" id="album">
                     <?php foreach ($albums as $album): ?>
+                        <option value="NULL">None</option>
                         <option value="<?php echo $album["album_id"]; ?>"><?php echo $album["judul"]; ?></option>
                     <?php endforeach; ?>
                 </select>
