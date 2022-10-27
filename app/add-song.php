@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $uploadErr = "Sorry, there was an error uploading your file.";
         }
     }
+
     if($album_id == "NULL") {
         $query = "INSERT INTO song (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path) VALUES ('$song_title', '$artist_name', '$release_date', '$genre', '$total_seconds', '$target_file_audio', '$target_file_img')";
     } else {
@@ -56,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Add Song - Binotify</title>
     <link rel="stylesheet" href="css/globals.css">
     <link rel="stylesheet" href="css/add-song.css">
+    <script src="js/album.js" defer></script>
 </head>
 <body>
     <?php 
@@ -96,9 +98,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $albums = $query->fetchAll(PDO::FETCH_ASSOC);
                 ?>
                 <label for="album">Album</label>
-                <select name="album" id="album">
+                <select name="album" id="album" onchange="checkAlbum(this.value)">
+                    <option value="NULL">None</option>
                     <?php foreach ($albums as $album): ?>
-                        <option value="NULL">None</option>
                         <option value="<?php echo $album["album_id"]; ?>"><?php echo $album["judul"]; ?></option>
                     <?php endforeach; ?>
                 </select>
