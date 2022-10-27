@@ -50,7 +50,12 @@
             else{
                 $new_audio_path = $song['audio_path'];
             }
-            $conn->exec("UPDATE song SET judul = '$new_judul', tanggal_terbit = '$new_tanggal', genre = '$new_genre', image_path = '$new_image_path', audio_path= '$new_audio_path', album_id = $new_album_id WHERE song_id = '$song_id'");
+            $time = exec("ffmpeg -i " . escapeshellarg($_FILES["song_audio"]["tmp_name"]) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+            list($hms, $milli) = explode('.', $time);
+            list($hours, $minutes, $seconds) = explode(':', $hms);
+            $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
+            $conn->exec("UPDATE song SET judul = '$new_judul', tanggal_terbit = '$new_tanggal', genre = '$new_genre', duration = '$total_seconds', image_path = '$new_image_path', audio_path= '$new_audio_path', album_id = $new_album_id WHERE song_id = '$song_id'");
             $song= $conn->query("SELECT * FROM song WHERE song_id = '$song_id'")->fetch(PDO::FETCH_ASSOC);
             $albums = $conn->query("SELECT * FROM album")->fetchAll(PDO::FETCH_ASSOC);
             header("Location: edit-lagu.php?song_id=$song_id");

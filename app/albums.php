@@ -3,8 +3,15 @@ session_start();
 require('connect.php');
 require('template/navbar.php');
 
-$result = $conn->query("SELECT * FROM album");
+$jumlahDataPerHalaman = 10;
+$jumlahData = $conn->query("SELECT * FROM album")->rowCount();
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+$halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
+$awalData = ($jumlahDataPerHalaman * ($halamanAktif-1));
+
+$result = $conn->query("SELECT * FROM album LIMIT $jumlahDataPerHalaman OFFSET $awalData");
 $albums = $result->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +28,20 @@ $albums = $result->fetchAll(PDO::FETCH_ASSOC);
         <?php navbar(); ?>
         <div class="main">
             <h1>Daftar Album</h1>
+            <div class='page'>
+                <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                    <label for="page">Page:</label>
+                    <select name="page" id="page" onchange="this.form.submit();">
+                        <?php for($i = 1; $i <= $jumlahHalaman; $i++): ?>
+                            <?php if($i == $halamanAktif): ?>
+                                <option value="<?php echo $i; ?>" selected><?php echo $i; ?></option>
+                            <?php else: ?>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+                    </select>
+                </form>
+            </div>
             <div class="container"> 
                 <?php foreach ($albums as $album): ?>
                     <?php
