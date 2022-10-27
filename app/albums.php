@@ -19,23 +19,23 @@ $albums = $result->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <div class="top-container">
         <?php navbar(); ?>
-    </div>
-    <div class="main">
-        <h1>Daftar Album</h1>
-        <div class="container"> 
-            <?php foreach ($albums as $album): ?>
-                <?php
-                    $tahun = substr($album['tanggal_terbit'], 0, 4);
-                ?>
-                <div class="album">
-                    <a href="detailAlbum.php?album_id=<?= $album['album_id'] ?>">
-                        <img src='<?php echo $album['image_path']; ?>'/>
-                        <div class="judul"><?php echo $album['judul']; ?></div>
-                        <div class="tahun"><?php echo $tahun," &#8226; ", $album['penyanyi'] ; ?></div>
-                        <div class="genre"><?php echo $album['genre']; ?></div>
-                    </a>
-                </div> 
-            <?php endforeach; ?>
+        <div class="main">
+            <h1>Daftar Album</h1>
+            <div class="container"> 
+                <?php foreach ($albums as $album): ?>
+                    <?php
+                        $tahun = substr($album['tanggal_terbit'], 0, 4);
+                    ?>
+                    <div class="album">
+                        <a href="detailAlbum.php?album_id=<?= $album['album_id'] ?>">
+                            <div class="gambar"><img src='<?php echo $album['image_path']; ?>'/></div>
+                            <div class="judul"><?php echo $album['judul']; ?></div>
+                            <div class="tahun"><?php echo $tahun," &#8226; ", $album['penyanyi'] ; ?></div>
+                            <div class="genre"><?php echo $album['genre']; ?></div>
+                        </a>
+                    </div> 
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </body>
