@@ -49,7 +49,7 @@
 .song {
   min-width: 200px;
   min-height: 300px;
-  max-width: 230px;
+  max-width: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -77,8 +77,6 @@
   max-width: 100%;
   min-width: 190px;
   min-height: 200px;
-  width: 7vw;
-  height: 7vw;
   padding: 10px;
   border: #000 solid 2px;
   border-radius: 10px;
@@ -97,7 +95,7 @@
 }
 
 .song-info h2 {
-  font-size: 2vw;
+  font-size: 16px;
   font-weight: 500;
   margin: 0;
   padding: 0;

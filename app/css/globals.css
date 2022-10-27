@@ -49,11 +49,15 @@ body {
   transition: 0.5s;
 }
 
+.form-searchbar {
+  width: 15vw;
+}
+
 .search-bar {
   border-radius: 500px;
   padding: 12px;
   text-overflow: ellipsis;
-  width: 15rem;
+  width: 15vw;
 }
 
 .username {
