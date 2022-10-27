@@ -28,7 +28,7 @@ $songs = $query->fetchAll(PDO::FETCH_ASSOC);
                     <div class='song'>
                         <a href="song.php?id=<?php echo $song['song_id']; ?>">
                             <div class='song-img'>
-                                <img src=<?php echo $song['image_path']; ?> alt="song image">
+                                <img src='<?php echo $song['image_path']; ?>' alt="song image">
                             </div>
                             <div class='song-info'>
                                 <h2><?php echo $song['judul']; ?></h2>
