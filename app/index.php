@@ -27,11 +27,15 @@ $songs = $query->fetchAll(PDO::FETCH_ASSOC);
                     <?php $album = $conn->query("SELECT judul FROM album WHERE album_id = " . $song['album_id'])->fetch(PDO::FETCH_ASSOC); ?>
                     <div class='song'>
                         <a href="song.php?id=<?php echo $song['song_id']; ?>">
-                            <img src=<?php echo $song['image_path']; ?> alt="song image">
-                            <h2><?php echo $song['judul']; ?></h2>
-                            <p><?php echo substr($song['tanggal_terbit'], 0, 4); ?></p>
-                            <p><?php echo $song['penyanyi']; ?></p>
-                            <p><?php echo $album['judul'] ?></p>
+                            <div class='song-img'>
+                                <img src=<?php echo $song['image_path']; ?> alt="song image">
+                            </div>
+                            <div class='song-info'>
+                                <h2><?php echo $song['judul']; ?></h2>
+                                <p><?php echo substr($song['tanggal_terbit'], 0, 4); ?></p>
+                                <p><?php echo $song['penyanyi']; ?></p>
+                                <p><?php echo $album['judul'] ?></p>
+                            </div>
                         </a>
                     </div>
                 <?php endforeach; ?>
