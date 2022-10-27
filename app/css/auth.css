@@ -37,7 +37,7 @@ input[type="text"],
 [type="email"] {
   width: 100%;
   background-color: #333333;
-  border: 0px;
+  border: 1px solid #333333;
   padding: 14px;
   box-sizing: border-box;
   color: white;

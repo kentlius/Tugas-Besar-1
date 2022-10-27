@@ -6,7 +6,7 @@ if (isset($_SESSION['username'])) {
 }
 
 require('connect.php');
-$username = $email = $passErr = $usernameErr = $emailErr = "";
+$passErr = "";
 $error = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = test_input($_POST['username']);
@@ -15,21 +15,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = test_input($_POST['confirm_password']);
 
     if(!preg_match("/^(?=[a-zA-Z0-9._]{1,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/", $username)) {
-        $usernameErr = "<div class='error'>Please enter a valid username.</div>";
         $error = true;
     }
 
     $result = $conn->query("SELECT * FROM users WHERE username='$username'");
     $row = $result->fetch(PDO::FETCH_ASSOC);
     if ($row) {
-        $usernameErr = "<div class='error'>Username already exists.</div>";
         $error = true;
     }  
 
     $result = $conn->query("SELECT * FROM users WHERE email='$email'");
     $row = $result->fetch(PDO::FETCH_ASSOC);
     if ($row) {
-        $emailErr = "<div class='error'>Email already exists.</div>";
         $error = true;
     }
 
@@ -39,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($error === false) {
-        $password = 
         $query = "INSERT INTO users (email, password, username, isadmin) VALUES ('$email', '" . password_hash($password, PASSWORD_DEFAULT) . "', '$username', false)";
         $conn->exec($query);
         header("Location: /login.php");
@@ -63,6 +59,7 @@ function test_input($data) {
     <title>Sign up - Binotify</title>
     <link rel="stylesheet" href="css/globals.css">
     <link rel="stylesheet" href="css/auth.css">
+    <script src="js/auth.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -74,14 +71,14 @@ function test_input($data) {
         <div class="auth-container">
             <div class="auth-form">
                 <h1 class="title">Sign up for free to start listening.</h1>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" autocomplete="off">
                     <div class="input-form">
-                        <input type="text" name="username" placeholder="Username" value="<?php echo $username;?>" autofocus required>
-                        <?php echo $usernameErr; ?>
+                        <input id="username" type="text" name="username" placeholder="Username" onkeyup="checkUsername(this.value)" autofocus required autocomplete="off">
+                        <div class="error" id="usernameErr"></div>
                     </div>
                     <div class="input-form">
-                        <input type="email" name="email" placeholder="Email" value="<?php echo $email;?>" required>
-                        <?php echo $emailErr; ?>
+                        <input id="email" type="email" name="email" placeholder="Email" onkeyup="checkEmail(this.value)" required autocomplete="off">
+                        <div class="error" id="emailErr"></div>
                     </div>
                     <div class="input-form">
                         <input type="password" name="password" placeholder="Create a Password" required>
