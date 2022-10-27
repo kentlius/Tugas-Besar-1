@@ -20,7 +20,7 @@
 .song {
   min-width: 200px;
   min-height: 300px;
-  max-width: 230px;
+  max-width: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,16 +44,17 @@
   color: white;
 }
 
-.song-img img {
+.song-img {
   max-width: 100%;
   min-width: 190px;
   min-height: 200px;
-  width: 7vw;
-  height: 7vw;
   padding: 10px;
   border: #000 solid 2px;
   border-radius: 10px;
-  overflow: hidden;
+}
+
+.song-img img {
+  max-width: 100%;
 }
 
 .song-info {
@@ -63,15 +64,17 @@
   max-height: 100%;
   max-width: 100%;
   white-space: wrap;
-  margin: 4px;
   overflow: hidden;
+  padding: 1rem;
 }
 
 .song-info h2 {
-  font-size: 2vw;
+  font-size: 16px;
   font-weight: 500;
   margin: 0;
   padding: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .song-info p{

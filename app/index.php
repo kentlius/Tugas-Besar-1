@@ -32,8 +32,7 @@ $songs = $query->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                             <div class='song-info'>
                                 <h2><?php echo $song['judul']; ?></h2>
-                                <p><?php echo substr($song['tanggal_terbit'], 0, 4); ?></p>
-                                <p><?php echo $song['penyanyi']; ?></p>
+                                <p><?php echo substr($song['tanggal_terbit'], 0, 4), " &#8226 ", $song['penyanyi']; ?></p>
                                 <p><?php echo $album['judul'] ?></p>
                             </div>
                         </a>
