@@ -26,7 +26,7 @@ $songs = $query->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($songs as $song) : ?>
                     <?php $album = $conn->query("SELECT judul FROM album WHERE album_id = " . $song['album_id'])->fetch(PDO::FETCH_ASSOC); ?>
                     <div class='song'>
-                        <a href="song.php?id=<?php echo $song['song_id']; ?>">
+                        <a href="detailLagu.php?song_id=<?php echo $song['song_id']; ?>">
                             <div class='song-img'>
                                 <img src='<?php echo $song['image_path']; ?>' alt="song image">
                             </div>
