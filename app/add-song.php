@@ -25,6 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    $time = exec("ffmpeg -i " . escapeshellarg($_FILES["song_audio"]["tmp_name"]) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+    list($hms, $milli) = explode('.', $time);
+    list($hours, $minutes, $seconds) = explode(':', $hms);
+    $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
     if (file_exists($target_file_audio)) {
         $uploadSongErr = "song already exists.";
     } else {
@@ -35,16 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $query = "INSERT INTO song (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path, album_id) VALUES ('$song_title', '$artist_name', '$release_date', '$genre', '0', '$target_file_audio', '$target_file_img', '$album_id')";
+    $query = "INSERT INTO song (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path, album_id) VALUES ('$song_title', '$artist_name', '$release_date', '$genre', '$total_seconds', '$target_file_audio', '$target_file_img', '$album_id')";
     $conn->exec($query);
-
-    echo $song_title;
-    echo $artist_name;
-    echo $release_date;
-    echo $genre;
-    echo $album_id;
-    echo $target_file_audio;
-    echo $target_file_img;
 }
 ?>
 <!DOCTYPE html>
