@@ -27,3 +27,17 @@ CREATE TABLE IF NOT EXISTS song (
     image_path      varchar(256),
     album_id        integer REFERENCES album(album_id)
 );
+
+CREATE OR REPLACE FUNCTION update_total_duration()
+RETURNS TRIGGER AS $insert_song$
+	BEGIN
+		UPDATE album
+		SET total_duration = total_duration + NEW.duration
+		WHERE album_id = NEW.album_id;
+		RETURN NULL;
+	END;
+$insert_song$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE TRIGGER insert_song
+AFTER INSERT ON song
+FOR EACH ROW EXECUTE FUNCTION update_total_duration();
