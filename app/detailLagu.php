@@ -15,6 +15,16 @@
         $album = $result->fetch(PDO::FETCH_ASSOC);
     }
     $isAdmin = isset($_SESSION["admin"]);
+
+    $val = 0;
+    if(!isset($_SESSION['username'])) {
+        if (isset($_COOKIE['count'])) {
+            $val = ++$_COOKIE['count'];
+        } else {
+            $val = 1;
+        }
+        setcookie('count', $val, strtotime('today 23:59'), '/');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -75,9 +85,14 @@
                 </div>
             </div>
             <div class="audio-player">
-                <audio controls autoplay>
-                    <source src='<?php echo $song['audio_path']; ?>' type="audio/mpeg">
-                </audio>
+                <?php if($val <= 3) {
+                    echo "
+                    <audio controls autoplay>
+                        <source src='$song[audio_path]' type='audio/mpeg'>
+                    </audio>";
+                } else {
+                    echo "You have played music 3 times today.";
+                } ?>
             </div>
         </div>
     </div>
