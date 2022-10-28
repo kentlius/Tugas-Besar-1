@@ -4,6 +4,8 @@
 
     $genres = $conn->query("SELECT DISTINCT GENRE FROM song")->fetchAll(PDO::FETCH_ASSOC);
     $jumlahDataPerHalaman = 10;
+
+    
     $jumlahData = $conn->query("SELECT * FROM song")->rowCount();
     $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
     $halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
@@ -12,31 +14,42 @@
     $sort = "JUDUL ASC";
     $filter = "";
     $searchkey = "";
+    $searchselect = "JUDUL";
+    $search = "";
 
-    $result = $conn->query("SELECT * FROM song WHERE LOWER(JUDUL) LIKE '%$searchkey%' AND LOWER(GENRE) LIKE '%$filter%' ORDER BY $sort LIMIT 10")->fetchAll(PDO::FETCH_ASSOC);
+    $result = $conn->query("SELECT * FROM song WHERE LOWER($searchselect) LIKE '%$searchkey%' AND LOWER(GENRE) LIKE '%$filter%' ORDER BY $sort LIMIT 10")->fetchAll(PDO::FETCH_ASSOC);
     
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
         if(!empty($_GET)){
-            foreach($_GET as $key => $value){
-                if($key == "sort"){
-                    $sort = $value;
+                if(isset($_GET["search"])){
+                    $searchkey = $_GET["search"];
                 }
-                elseif($key == "filter"){
-                    $filter = strtolower($value);
+                if(isset($_GET["searchselect"])){
+                    if($_GET["searchselect"] == "TANGGAL_TERBIT"){
+                        $search = "TANGGAL TERBIT";
+                        $searchselect = "date_part('year', tanggal_terbit) = $searchkey";
+                    }elseif($_GET["searchselect"] == "JUDUL"){
+                        $search = "JUDUL";
+                        $searchselect = "LOWER(JUDUL) LIKE '%$searchkey%'";
+                    }elseif($_GET["searchselect"] == "PENYANYI"){
+                        $search = "PENYANYI";
+                        $searchselect = "LOWER(PENYANYI) LIKE '%$searchkey%'";
+                    }
                 }
-                elseif($key == "reset"){
-                    $sort = "JUDUL ASC";
-                    $filter = "";
-                    $halamanAktif = 1;
-                }elseif($key == "search"){
-                    $searchkey = strtolower($value);
+                if(isset($_GET["filter"])){
+                    $filter = strtolower($_GET["filter"]);
                 }
-            }
-            $jumlahData = $conn->query("SELECT * FROM song WHERE LOWER(GENRE) LIKE '%$filter%'")->rowCount();
+                if(isset($_GET["sort"])){
+                    $sort = $_GET["sort"];
+                }
+                if(isset($_GET["reset"])){
+                    header("Location: search.php");
+                }
+            $jumlahData = $conn->query("SELECT * FROM song WHERE LOWER(GENRE) LIKE '%$filter%' AND $searchselect")->rowCount();
             $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
             $halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
             $awalData = ($jumlahDataPerHalaman * ($halamanAktif-1));
-            $result = $conn->query("SELECT * FROM song WHERE LOWER(JUDUL) LIKE '%$searchkey%' AND LOWER(GENRE) LIKE '%$filter%' ORDER BY $sort LIMIT $jumlahDataPerHalaman OFFSET $awalData")->fetchAll(PDO::FETCH_ASSOC);
+            $result = $conn->query("SELECT * FROM song WHERE $searchselect AND LOWER(GENRE) LIKE '%$filter%' ORDER BY $sort LIMIT $jumlahDataPerHalaman OFFSET $awalData")->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 ?>
@@ -53,54 +66,69 @@
     <div class="top-container">
         <?php navbar(); ?>
         <div class="main">
-            <h1>Search Result</h1>
+            <h1>Search</h1>
             <div class='sort-filter'>
-                <h2>Sort and filter by:</h2>
-                <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <form method="get" id="search-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                    <div class="search">
+                        <input class="search-bar" type="text" name="search" placeholder="What do you want to search?" value="<?php echo $searchkey; ?>">
+                        <select class="searchselect" name="searchselect">
+                            <option value="JUDUL" <?php if($search == "JUDUL") {echo 'selected';} ?>>Judul</option>
+                            <option value="PENYANYI" <?php if($search == "PENYANYI") {echo 'selected';} ?>>Penyanyi</option>
+                            <option value="TANGGAL_TERBIT" <?php if($search == "TANGGAL_TERBIT") {echo 'selected';} ?>>Tahun</option>
+                        </select>
+                    </div>
+                    <h2>Sort and filter by:</h2>
                     <div class='sort'>
                         <label for="sort">Sort by:</label>
                         <select name="sort" id="sort">
-                            <option value="JUDUL ASC">Title (A-Z)</option>
-                            <option value="JUDUL DESC">Title (Z-A)</option>
-                            <option value="TANGGAL_TERBIT ASC">Release Date (Ascending)</option>
-                            <option value="TANGGAL_TERBIT DESC">Release Date (Descending)</option>
+                            <option value="JUDUL ASC" <?php if($sort == "JUDUL ASC") {echo 'selected';} ?>>Title (A-Z)</option>
+                            <option value="JUDUL DESC" <?php if($sort == "JUDUL DESC") {echo 'selected';} ?>>Title (Z-A)</option>
+                            <option value="TANGGAL_TERBIT ASC" <?php if($sort == "TANGGAL_TERBIT ASC") {echo 'selected';} ?>>Release Year (Ascending)</option>
+                            <option value="TANGGAL_TERBIT DESC" <?php if($sort == "TANGGAL_TERBIT DESC") {echo 'selected';} ?> >Release Year (Descending)</option>
                         </select>
                     </div>
                     <div class='filter'>
                         <label for="filter">Filter by:</label>
                         <select name="filter" id="filter">
+                            <option value=''  <?php if(!$filter) {echo 'selected';} ?>>All</option>
                             <?php foreach($genres as $genre): ?>
-                                <option value="<?php echo $genre['genre']; ?>"><?php echo $genre['genre']; ?></option>
+                                <?php if($genre["genre"] == $filter): ?>
+                                    <option value="<?php echo $genre["genre"]; ?>" selected><?php echo $genre["genre"]; ?></option>
+                                <?php else: ?>
+                                    <option value="<?php echo $genre["genre"]; ?>"><?php echo $genre["genre"]; ?></option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <input type="submit" name="submit" value="OK" hidden>
-                        <button class='submitbutton' type="submit" name="submit" value="OK">Submit</button>
+                    <input type="submit" name="submitBtn" value="OK" hidden>
+                        <button class='submitbutton' type="submit" name="submitBtn" value="OK">Submit</button>
                     </input>
-                </form>
-                <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                <input type="submit" name="reset" value="OK" hidden>
+                    <input type="submit" name="reset" value="OK" hidden>
                         <button class='submitbutton' type="submit" name="reset" value="OK">Reset</button>
                     </input>
+                    <div class='page'>
+                            <label for="page">Page:</label>
+                            <select name="page" id="page" onchange="submitHandler()">
+                                <?php for($i = 1; $i <= $jumlahHalaman; $i++): ?>
+                                    <?php if($i == $halamanAktif): ?>
+                                        <option value="<?php echo $i; ?>" selected><?php echo $i; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                            </select>
+                    </div>
                 </form>
             </div>
-            <div class='page'>
-                <form method="get" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <label for="page">Page:</label>
-                    <select name="page" id="page" onchange="this.form.submit();">
-                        <?php for($i = 1; $i <= $jumlahHalaman; $i++): ?>
-                            <?php if($i == $halamanAktif): ?>
-                                <option value="<?php echo $i; ?>" selected><?php echo $i; ?></option>
-                            <?php else: ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                            <?php endif; ?>
-                        <?php endfor; ?>
-                    </select>
-                </form>
-            </div>
+            <h1>Result</h1>
             <div class="song-container">
                 <?php foreach ($result as $song) : ?>
                     <?php 
+                        if($song["genre"] != NULL){
+                            $genre = $song["genre"];
+                        } else {
+                            $genre = "Unknown";
+                        }
                         if($song['album_id'] != NULL){
                             $album = $conn->query("SELECT * FROM album WHERE album_id = '$song[album_id]'")->fetch(PDO::FETCH_ASSOC);
                             $album_name = $album['judul'];
@@ -126,3 +154,10 @@
         </div>
     </div>
 </body>
+<script>
+    const submitHandler = () => {
+        console.log('submit');
+        document.getElementById('search-form').submit();
+    };
+</script>
+</html>

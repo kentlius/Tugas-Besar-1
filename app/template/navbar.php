@@ -29,11 +29,9 @@ function navbar()
                 <img src='img/Spotify_Logo_RGB_White.png' alt='logo' width='128'>
             </a>
             <a href="index.php">Home</a>
+            <a href="search.php">Search</a>
             <a href="albums.php">Albums</a>
             $admin_link
-            <form class='form-searchbar' action='search.php' method='get'>
-                <input class='search-bar' type='text' name='search' placeholder='What do you want to search?'>
-            </form>
         </div>
         <div class="right-navbar">
             $auth

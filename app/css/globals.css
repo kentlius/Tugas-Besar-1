@@ -66,19 +66,6 @@ body {
   transition: 0.5s;
 }
 
-.form-searchbar {
-  width: 20vw;
-
-}
-
-.search-bar {
-  border-radius: 500px;
-  padding: 12px;
-  text-overflow: ellipsis;
-  width: 100%;
-  display: block;
-}
-
 .username {
   text-align: center;
   margin-left: auto;
