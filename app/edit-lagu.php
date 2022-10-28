@@ -2,6 +2,10 @@
     require('session/admin_auth.php');
     require('connect.php');
     require('template/navbar.php');
+
+    if(!isset($_GET['song_id'])){
+        header('Location: index.php');
+    }
     $song_id = $_GET['song_id'];
     
     $res = $conn->query("SELECT * FROM song WHERE song_id = '$song_id'");

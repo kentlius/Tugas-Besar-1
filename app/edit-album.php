@@ -3,6 +3,9 @@
     require('connect.php');
     require('template/navbar.php');
 
+    if(!isset($_GET['album_id'])){
+        header('Location: albums.php');
+    }
     $album_id = $_GET['album_id'];
     $result = $conn->query("SELECT * FROM album WHERE album_id = '$album_id'");
     $albums= $result->fetch(PDO::FETCH_ASSOC);
