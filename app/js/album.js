@@ -8,7 +8,7 @@ function checkAlbum(str) {
     xmlhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         document.getElementById("artist_name").value = this.responseText;
-        document.getElementById("artist_name").disabled = true;
+        // document.getElementById("artist_name").disabled = true;
       }
     };
     xmlhttp.open("GET", "checkAlbum.php?q=" + str, true);
