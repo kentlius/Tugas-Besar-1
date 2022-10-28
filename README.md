@@ -36,12 +36,26 @@ Lalu buka http://localhost:8080/
 
 ## Pembagian Tugas
 
-<u>Server-side</u>
-Login : 13520xxx, 13520xxx  
-Register : 13520xxx  
-(Lanjutkan …)
+<u>Server-side</u>  
+Login : 13520069  
+Register : 13520069  
+Home : 13520167  
+Daftar Album : 13520006, 13520167  
+Search : 13520167  
+Detail Lagu : 13520006  
+Detail Album : 13520006, 13520167  
+Tambah Album : 13520069  
+Tambah Lagu : 13520069  
+List User : 13520069  
 
-<u>Client-side</u>
-Login : 13520xxx, 13520xxx  
-Register : 13520xxx  
-(Lanjutkan…)
+<u>Client-side</u>  
+Login : 13520069  
+Register : 13520069  
+Home : 13520006, 13520167  
+Daftar Album : 13520006  
+Search : 13520167  
+Detail Lagu : 13520006  
+Detail Album : 13520006  
+Tambah Album : 13520069  
+Tambah Lagu : 13520069  
+List User : 13520069
