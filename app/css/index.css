@@ -47,7 +47,6 @@
   max-width: 100%;
   min-width: 190px;
   min-height: 200px;
-  padding: 10px;
   border: none;
   border-radius: 10px;
   box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.2);
@@ -55,6 +54,7 @@
 
 .song-img img {
   max-width: 100%;
+  border-radius: 10px;
 }
 
 .song-info {
@@ -65,7 +65,6 @@
   max-width: 100%;
   white-space: wrap;
   overflow: hidden;
-  padding: 1rem;
 }
 
 .song-info h2 {
@@ -74,11 +73,6 @@
   margin: 0;
   padding: 0;
   margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.song-info p{
-  white-space: wrap;
 }
 
 .top-container {

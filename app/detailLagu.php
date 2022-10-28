@@ -58,8 +58,15 @@
         </div>
         <div class="isi">
             <div class="cover">
+                <?php
+                    if($song["image_path"] == "uploads/img/"){
+                        $image = 'uploads/img/NoImage.png';
+                    }else{
+                        $image = $song["image_path"];
+                    }
+                ?>
                 <div class="image">
-                    <img src='<?php echo $song['image_path']; ?>'/>
+                    <img src='<?php echo $image; ?>'/>
                 </div>
                 <div class="lagu_detail">
                     <?php
@@ -80,8 +87,13 @@
                     ?></div>
                     <div class="judul"><?php echo $song['judul']; ?></div>
                     <div class="penyanyi"><?php echo $song['penyanyi']," &#8226; ",$tanggal," ",$nama_bulan," ", $tahun; ?></div>
-                    <div class="genre"><?php echo $song['genre']; ?></div>
                     <div class="durasi"><?php echo $minute," minutes ",$second," seconds"; ?></div>
+                    <div class="genre"><?php 
+                                if($song["genre"] != NULL){
+                                    echo $song["genre"];
+                                }
+                            ?>
+                            </div>
                 </div>
             </div>
             <div class="audio-player">

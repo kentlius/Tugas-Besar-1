@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div>
                 <label for="album_image">Album Image</label>
-                <input type="file" name="album_image" id="album_image" accept="image/*" required>
+                <input type="file" name="album_image" id="album_image" accept="image/*">
                 <?php echo $uploadErr; ?>
             </div>
             <div>
