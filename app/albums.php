@@ -11,7 +11,6 @@ $awalData = ($jumlahDataPerHalaman * ($halamanAktif-1));
 
 $result = $conn->query("SELECT * FROM album LIMIT $jumlahDataPerHalaman OFFSET $awalData");
 $albums = $result->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,14 +44,24 @@ $albums = $result->fetchAll(PDO::FETCH_ASSOC);
             <div class="container"> 
                 <?php foreach ($albums as $album): ?>
                     <?php
+                        if($album["image_path"] == "uploads/img/"){
+                            $image = 'uploads/img/NoImage.png';
+                        }else{
+                            $image = $album["image_path"];
+                        }
                         $tahun = substr($album['tanggal_terbit'], 0, 4);
                     ?>
                     <div class="album">
                         <a href="detailAlbum.php?album_id=<?= $album['album_id'] ?>">
-                            <div class="gambar"><img src='<?php echo $album['image_path']; ?>'/></div>
+                            <div class="gambar"><img src="<?php echo stripslashes( $image); ?>"/></div>
                             <div class="judul"><?php echo $album['judul']; ?></div>
                             <div class="tahun"><?php echo $tahun," &#8226; ", $album['penyanyi'] ; ?></div>
-                            <div class="genre"><?php echo $album['genre']; ?></div>
+                            <div class="genre"><?php 
+                                if($album["genre"] != NULL){
+                                    echo $album["genre"];
+                                }
+                            ?>
+                            </div>
                         </a>
                     </div> 
                 <?php endforeach; ?>

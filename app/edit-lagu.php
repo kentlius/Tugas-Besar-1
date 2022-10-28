@@ -38,14 +38,21 @@
             else{
                 $new_image_path = $song['image_path'];
             }
-            
             if($target_file_audio != $song['audio_path'] && $target_file_audio != $target_dir_audio){
                 $new_audio_path = $target_file_audio;
                 if (file_exists($target_file_audio)) {
                     $uploadSongErr = "song already exists.";
+                    $time = exec("ffmpeg -i " . escapeshellarg($target_file_audio) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+                    list($hms, $milli) = explode('.', $time);
+                    list($hours, $minutes, $seconds) = explode(':', $hms);
+                    $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
                 } else {
                     if (move_uploaded_file($_FILES["audio_path"]["tmp_name"], $target_file_audio)) {
                         $uploadErr = "The file ". htmlspecialchars(basename($_FILES["audio_path"]["name"])). " has been uploaded.";
+                        $time = exec("ffmpeg -i " . escapeshellarg($target_file_audio) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+                        list($hms, $milli) = explode('.', $time);
+                        list($hours, $minutes, $seconds) = explode(':', $hms);
+                        $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
                     } else {
                         $uploadErr = "Sorry, there was an error uploading your file.";
                     }
@@ -53,11 +60,9 @@
             }
             else{
                 $new_audio_path = $song['audio_path'];
+                $total_seconds = $song['duration'];
             }
-            $time = exec("ffmpeg -i " . escapeshellarg($_FILES["song_audio"]["tmp_name"]) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
-            list($hms, $milli) = explode('.', $time);
-            list($hours, $minutes, $seconds) = explode(':', $hms);
-            $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+            
 
             $conn->exec("UPDATE song SET judul = '$new_judul', tanggal_terbit = '$new_tanggal', genre = '$new_genre', duration = '$total_seconds', image_path = '$new_image_path', audio_path= '$new_audio_path', album_id = $new_album_id WHERE song_id = '$song_id'");
             $song= $conn->query("SELECT * FROM song WHERE song_id = '$song_id'")->fetch(PDO::FETCH_ASSOC);
@@ -89,13 +94,27 @@
         <?php navbar(); ?>
     </div>
     <div class="container">  
+        <div class="back">
+            <a href="detailLagu.php?song_id=<?= $song['song_id'] ?>">
+                <div class="gambar_back">
+                    <img src="img/back.png" alt="back">
+                </div>
+            </a>
+        </div>
         <form method="post" enctype="multipart/form-data">
             <label for="image_path">Image Path</label>
             <div class="image">
-                <img src="<?php echo $song['image_path']; ?>" alt="album image">
+                <img id="output" src="<?php echo $song['image_path']; ?>" alt="album image">
             </div>
             <div class="item">
-                <input type="file" name="image_path" id="image_path" accept="image/*">
+                <input
+                    type="file"
+                    name="image_path"
+                    id="image_path"
+                    accept="image/*"
+                    autocomplete="off"
+                    onchange="loadFile(event)"
+                />
                 <label for="audio_path">Audio Path</label>
                 <input type="file" name="audio_path" id="audio_path" accept="audio/*">
                 <label for="judul">Judul</label>
@@ -117,6 +136,17 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div>
+        <script>
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                output.src = URL.createObjectURL(event.target.files[0]);
+                output.onload = function() {
+                    URL.revokeObjectURL(output.src) // free memory
+                }
+            };
+        </script>
     </div>
 </body>
 </html>

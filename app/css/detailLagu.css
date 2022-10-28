@@ -30,12 +30,24 @@ body {
   width: 35px;
   height: 35px;
 }
+.isi{
+  background-color: rgb(0, 0, 0, 0.4);
+  width: 80vw;
+  height: 65vh;
+  border-radius: 20px;
+  margin: auto;
+  padding: 10px;
+}
 .cover {
   display: flex;
   flex-direction: row;
 }
+.image{
+  margin-top: 50px;
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
 .image img {
-  margin: 10px;
   min-width: 150px;
   min-height: 150px;
   width: 15vw;
@@ -47,8 +59,6 @@ body {
   grid-area: main;
   background-image: linear-gradient(green, black);
   padding: 2%;
-  display: flex;
-  flex-direction: column;
   max-height: 100%;
   height: 100vh;
 }
@@ -56,4 +66,43 @@ body {
 .lagu_detail {
   margin-top: 7vw;
   padding: 10px;
+}
+
+.audio-player{
+  margin: 10px;
+  width: 70 vw;
+  height: 10vh;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.audio-player audio{
+  width: 100%;
+  height: 100%;
+}
+
+.judul{
+  font-size: 30px;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.penyanyi{
+  font-size: 15px;
+  margin: 5px;
+}
+
+.genre{
+  font-size: 15px;
+  margin: 5px;
+}
+
+.durasi{
+  font-size: 15px;
+  margin: 5px;
+}
+
+.album{
+  font-size: 15px;
+  margin: 5px;
 }

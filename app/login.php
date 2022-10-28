@@ -64,7 +64,7 @@ function test_input($data) {
                     <div class="input-form">
                         <input type="password" name="password" placeholder="Password" value="<?php echo $password;?>" required>
                     </div>
-                    <input type="submit" name="submit" value="LOG IN">
+                    <input type="submit" name="submit" value="LOG IN" id="debounce">
                     <p class=" link">Don't have an account? <a href="signup.php">Sign Up</a>.</p>
                 </form>
             </div>

@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Song - Binotify</title>
     <link rel="stylesheet" href="css/globals.css">
-    <link rel="stylesheet" href="css/add-song.css">
+    <link rel="stylesheet" href="css/add.css">
     <script src="js/album.js" defer></script>
 </head>
 <body>
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div>
                 <label for="song_image">Song Image</label>
-                <input type="file" name="song_image" id="song_image" accept="image/*" required>
+                <input type="file" name="song_image" id="song_image" accept="image/*">
                 <?php echo $uploadImgErr; ?>
             </div>
             <div>

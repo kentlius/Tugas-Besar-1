@@ -137,7 +137,7 @@
                         }
                     ?>
                     <div class='song'>
-                        <a href="song.php?id=<?php echo $song['song_id']; ?>">
+                        <a href="detailLagu.php?song_id=<?php echo $song['song_id']; ?>">
                             <div class='song-img'>
                                 <img src='<?php echo $song['image_path']; ?>' alt="song image">
                             </div>
