@@ -41,11 +41,16 @@
             
             if($target_file_audio != $song['audio_path'] && $target_file_audio != $target_dir_audio){
                 $new_audio_path = $target_file_audio;
+                
                 if (file_exists($target_file_audio)) {
                     $uploadSongErr = "song already exists.";
                 } else {
                     if (move_uploaded_file($_FILES["audio_path"]["tmp_name"], $target_file_audio)) {
                         $uploadErr = "The file ". htmlspecialchars(basename($_FILES["audio_path"]["name"])). " has been uploaded.";
+                        $time = exec("ffmpeg -i " . escapeshellarg($target_file_audio) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+                        list($hms, $milli) = explode('.', $time);
+                        list($hours, $minutes, $seconds) = explode(':', $hms);
+                        $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
                     } else {
                         $uploadErr = "Sorry, there was an error uploading your file.";
                     }
@@ -53,11 +58,9 @@
             }
             else{
                 $new_audio_path = $song['audio_path'];
+                $total_seconds = $song['duration'];
             }
-            $time = exec("ffmpeg -i " . escapeshellarg($_FILES["song_audio"]["tmp_name"]) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
-            list($hms, $milli) = explode('.', $time);
-            list($hours, $minutes, $seconds) = explode(':', $hms);
-            $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+            
 
             $conn->exec("UPDATE song SET judul = '$new_judul', tanggal_terbit = '$new_tanggal', genre = '$new_genre', duration = '$total_seconds', image_path = '$new_image_path', audio_path= '$new_audio_path', album_id = $new_album_id WHERE song_id = '$song_id'");
             $song= $conn->query("SELECT * FROM song WHERE song_id = '$song_id'")->fetch(PDO::FETCH_ASSOC);
