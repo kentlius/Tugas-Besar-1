@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Album - Binotify</title>
     <link rel="stylesheet" href="css/globals.css">
-    <link rel="stylesheet" href="css/add-album.css">
+    <link rel="stylesheet" href="css/add.css">
 </head>
 <body>
     <?php 
