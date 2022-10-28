@@ -3,12 +3,12 @@
     require('connect.php');
     require('template/navbar.php');
     $album_id = $_GET['album_id'];
-    $result = $conn->query("SELECT * FROM album WHERE album_id = '$album_id'");
+    $result = $conn->query("SELECT * FROM album WHERE album_id = '$album_id' ");
     $albums= $result->fetch(PDO::FETCH_ASSOC);
 
-    $res = $conn->query("SELECT * FROM song WHERE album_id = '$album_id'");
+    $res = $conn->query("SELECT * FROM song WHERE album_id = $album_id");
     $songs= $res->fetchAll(PDO::FETCH_ASSOC);
-    $jumlah_lagu = $conn->query("SELECT * FROM song WHERE album_id = '$album_id'")->rowCount();
+    $jumlah_lagu = $conn->query("SELECT * FROM song WHERE album_id = $album_id")->rowCount();
     $isAdmin = isset($_SESSION["admin"]);
 ?>
 

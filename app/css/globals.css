@@ -12,13 +12,30 @@ body {
   background-color: rgb(0, 0, 0, 0.4);
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 2rem;
   align-items: center;
   padding: 8px 36px;
   flex-wrap: wrap;
   top: 0;
   position: sticky;
+  height: 80px;
+}
+
+.left-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 2rem;
+  align-items: center;
+}
+
+.right-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 1rem;
+  align-items: center;
 }
 
 .navbar a {
@@ -50,19 +67,26 @@ body {
 }
 
 .form-searchbar {
-  width: 15vw;
-  padding-top: 12px;
+  width: 20vw;
+
 }
 
 .search-bar {
   border-radius: 500px;
   padding: 12px;
   text-overflow: ellipsis;
-  width: 15vw;
+  width: 100%;
   display: block;
 }
 
 .username {
   text-align: center;
   margin-left: auto;
+}
+
+.page #page {
+  padding: 0px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
 }

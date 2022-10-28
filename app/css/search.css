@@ -65,7 +65,7 @@
 
 .song:hover {
   transition: 0.5s;
-  background-color: rgb(0, 0, 0, 1);
+  background-color: rgb(255, 255, 255, 0.2);
 }
 
 .song a {
