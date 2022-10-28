@@ -16,18 +16,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(!preg_match("/^(?=[a-zA-Z0-9._]{1,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/", $username)) {
         $error = true;
+    } else {
+        $result = $conn->query("SELECT * FROM users WHERE username='$username'");
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            $error = true;
+        }  
     }
 
-    $result = $conn->query("SELECT * FROM users WHERE username='$username'");
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-    if ($row) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = true;
-    }  
-
-    $result = $conn->query("SELECT * FROM users WHERE email='$email'");
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-    if ($row) {
-        $error = true;
+    } else {
+        $result = $conn->query("SELECT * FROM users WHERE email='$email'");
+        $row = $result->fetch();
+        if ($row) {
+            $error = true;
+        }
     }
 
     if($password !== $confirm_password) {
@@ -38,7 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($error === false) {
         $query = "INSERT INTO users (email, password, username, isadmin) VALUES ('$email', '" . password_hash($password, PASSWORD_DEFAULT) . "', '$username', false)";
         $conn->exec($query);
-        header("Location: /login.php");
+        session_unset();
+        $_SESSION['username'] = $username;
+        header("Location: /");
         exit(); 
     }
 }
@@ -87,7 +93,7 @@ function test_input($data) {
                         <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                         <?php echo $passErr; ?>
                     </div>
-                    <input type="submit" name="submit" value="Continue" class="signup-button">
+                    <input type="submit" name="submit" value="Continue" class="signup-button" id="debounce">
                     <p class="link">Have an account? <a href="login.php">Log in</a>.</p>
                 </form>
             </div>

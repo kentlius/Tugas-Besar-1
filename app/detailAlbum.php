@@ -49,8 +49,15 @@
             <?php endif; ?>
         </div>
         <div class="cover">
+            <?php
+                if($albums["image_path"] == "uploads/img/"){
+                    $image = 'uploads/img/NoImage.png';
+                }else{
+                    $image = $albums["image_path"];
+                }
+            ?>
             <div class="image">
-                <img src='<?php echo $albums['image_path']; ?>'/>
+                <img src='<?php echo $image; ?>'/>
             </div>
             <div class="album_detail">
                 <?php

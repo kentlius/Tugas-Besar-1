@@ -9,7 +9,22 @@
     $song_id = $_GET['song_id'];
     $res = $conn->query("SELECT * FROM song WHERE song_id = '$song_id'");
     $song= $res->fetch(PDO::FETCH_ASSOC);
+    $album = "";
+    if($song['album_id'] != null){
+        $result = $conn->query("SELECT * FROM album WHERE album_id = '$song[album_id]'");
+        $album = $result->fetch(PDO::FETCH_ASSOC);
+    }
     $isAdmin = isset($_SESSION["admin"]);
+
+    $val = 0;
+    if(!isset($_SESSION['username'])) {
+        if (isset($_COOKIE['count'])) {
+            $val = ++$_COOKIE['count'];
+        } else {
+            $val = 1;
+        }
+        setcookie('count', $val, strtotime('today 23:59'), '/');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -41,29 +56,56 @@
                 </a>
             <?php endif; ?>
         </div>
-        <div class="cover">
-            <div class="image">
-                <img src='<?php echo $song['image_path']; ?>'/>
-            </div>
-            <div class="lagu_detail">
+        <div class="isi">
+            <div class="cover">
                 <?php
-                    $tahun = substr($song['tanggal_terbit'], 0, 4);
-                    $bulan = substr($song['tanggal_terbit'], 5, 2);
-                    $tanggal = substr($song['tanggal_terbit'], 8, 2);
-                    $minute = floor($song['duration'] / 60);
-                    $second = $song['duration'] % 60;
+                    if($song["image_path"] == "uploads/img/"){
+                        $image = 'uploads/img/NoImage.png';
+                    }else{
+                        $image = $song["image_path"];
+                    }
                 ?>
-                <div class="judul"><?php echo $song['judul']; ?></div>
-                <div class="penyanyi"><?php echo $song['penyanyi']; ?></div>
-                <div class="tanggal_terbit"><?php echo $song['tanggal_terbit']; ?></div>
-                <div class="genre"><?php echo $song['genre']; ?></div>
-                <div class="durasi"><?php echo $minute," minutes ",$second," seconds"; ?></div>
+                <div class="image">
+                    <img src='<?php echo $image; ?>'/>
+                </div>
+                <div class="lagu_detail">
+                    <?php
+                        $tahun = substr($song['tanggal_terbit'], 0, 4);
+                        $bulan = (int) substr($song['tanggal_terbit'], 5, 2);
+                        $nama_bulan = date("F", mktime(0, 0, 0, $bulan, 10));
+                        $tanggal = substr($song['tanggal_terbit'], 8, 2);
+                        $minute = floor($song['duration'] / 60);
+                        $second = $song['duration'] % 60;
+                    ?>
+                    <div class="album">
+                        <?php 
+                            if($album != ""){
+                                echo $album["judul"];
+                            }else{
+                                echo "Single";
+                            }
+                    ?></div>
+                    <div class="judul"><?php echo $song['judul']; ?></div>
+                    <div class="penyanyi"><?php echo $song['penyanyi']," &#8226; ",$tanggal," ",$nama_bulan," ", $tahun; ?></div>
+                    <div class="durasi"><?php echo $minute," minutes ",$second," seconds"; ?></div>
+                    <div class="genre"><?php 
+                                if($song["genre"] != NULL){
+                                    echo $song["genre"];
+                                }
+                            ?>
+                            </div>
+                </div>
             </div>
-        </div>
-        <div class="audio-player">
-            <audio controls>
-                <source src='<?php echo $song['audio_path']; ?>' type="audio/mpeg">
-            </audio>
+            <div class="audio-player">
+                <?php if($val <= 3) {
+                    echo "
+                    <audio controls autoplay>
+                        <source src='$song[audio_path]' type='audio/mpeg'>
+                    </audio>";
+                } else {
+                    echo "You have played music 3 times today.";
+                } ?>
+            </div>
         </div>
     </div>
 </body>
