@@ -94,6 +94,13 @@
         <?php navbar(); ?>
     </div>
     <div class="container">  
+        <div class="back">
+            <a href="detailLagu.php?song_id=<?= $song['song_id'] ?>">
+                <div class="gambar_back">
+                    <img src="img/back.png" alt="back">
+                </div>
+            </a>
+        </div>
         <form method="post" enctype="multipart/form-data">
             <label for="image_path">Image Path</label>
             <div class="image">

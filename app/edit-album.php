@@ -56,6 +56,13 @@
         <?php navbar(); ?>
     </div>
     <div class="container">
+        <div class="back">
+            <a href="detailAlbum.php?album_id=<?= $albums['album_id'] ?>">
+                <div class="gambar_back">
+                    <img src="img/back.png" alt="back">
+                </div>
+            </a>
+        </div>
         <form action='edit-album.php?album_id=<?php echo $album_id ?>' method='post'>
             <div class="form-container">
                 <label for="judul">Judul</label>
