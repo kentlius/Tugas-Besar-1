@@ -53,7 +53,7 @@ $albums = $result->fetchAll(PDO::FETCH_ASSOC);
                     ?>
                     <div class="album">
                         <a href="detailAlbum.php?album_id=<?= $album['album_id'] ?>">
-                            <div class="gambar"><img src="<?php echo stripslashes( $image); ?>"/></div>
+                            <div class="gambar"><img src="<?php echo  $image; ?>"/></div>
                             <div class="judul"><?php echo $album['judul']; ?></div>
                             <div class="tahun"><?php echo $tahun," &#8226; ", $album['penyanyi'] ; ?></div>
                             <div class="genre"><?php 
