@@ -32,7 +32,13 @@ Lalu buka http://localhost:8080/
 
 ## Screenshot
 
-![404](screenshots/404.jpg "404")
+![404](screenshots/login.png "404")
+![404](screenshots/register.png "404")
+![404](screenshots/Home.png "404")
+![404](screenshots/search.png "404")
+![404](screenshots/userlist.png "404")
+![404](screenshots/addalbum.png "404")
+![404](screenshots/addsong.png "404")
 
 ## Pembagian Tugas
 
