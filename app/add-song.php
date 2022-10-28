@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div>
                 <label for="song_image">Song Image</label>
-                <input type="file" name="song_image" id="song_image" accept="image/*" required>
+                <input type="file" name="song_image" id="song_image" accept="image/*">
                 <?php echo $uploadImgErr; ?>
             </div>
             <div>
