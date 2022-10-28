@@ -38,12 +38,14 @@
             else{
                 $new_image_path = $song['image_path'];
             }
-            
             if($target_file_audio != $song['audio_path'] && $target_file_audio != $target_dir_audio){
                 $new_audio_path = $target_file_audio;
-                
                 if (file_exists($target_file_audio)) {
                     $uploadSongErr = "song already exists.";
+                    $time = exec("ffmpeg -i " . escapeshellarg($target_file_audio) . " 2>&1 | grep 'Duration' | cut -d ' ' -f 4 | sed s/,//");
+                    list($hms, $milli) = explode('.', $time);
+                    list($hours, $minutes, $seconds) = explode(':', $hms);
+                    $total_seconds = ($hours * 3600) + ($minutes * 60) + $seconds;
                 } else {
                     if (move_uploaded_file($_FILES["audio_path"]["tmp_name"], $target_file_audio)) {
                         $uploadErr = "The file ". htmlspecialchars(basename($_FILES["audio_path"]["name"])). " has been uploaded.";
