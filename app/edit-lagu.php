@@ -97,10 +97,17 @@
         <form method="post" enctype="multipart/form-data">
             <label for="image_path">Image Path</label>
             <div class="image">
-                <img src="<?php echo $song['image_path']; ?>" alt="album image">
+                <img id="output" src="<?php echo $song['image_path']; ?>" alt="album image">
             </div>
             <div class="item">
-                <input type="file" name="image_path" id="image_path" accept="image/*">
+                <input
+                    type="file"
+                    name="image_path"
+                    id="image_path"
+                    accept="image/*"
+                    autocomplete="off"
+                    onchange="loadFile(event)"
+                />
                 <label for="audio_path">Audio Path</label>
                 <input type="file" name="audio_path" id="audio_path" accept="audio/*">
                 <label for="judul">Judul</label>
@@ -122,6 +129,17 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div>
+        <script>
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                output.src = URL.createObjectURL(event.target.files[0]);
+                output.onload = function() {
+                    URL.revokeObjectURL(output.src) // free memory
+                }
+            };
+        </script>
     </div>
 </body>
 </html>
