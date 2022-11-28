@@ -1,0 +1,1 @@
+docker volume rm tugas-besar-1_db-data
