@@ -3,7 +3,16 @@ CREATE TABLE IF NOT EXISTS users (
     email       varchar(256) NOT NULL UNIQUE,
     password    varchar(256) NOT NULL,
     username    varchar(256) NOT NULL UNIQUE,
-    isAdmin     boolean NOT NULL
+    isAdmin     boolean NOT NULL DEFAULT false
+);
+
+CREATE TYPE status AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED');
+
+CREATE TABLE IF NOT EXISTS subscription (
+    creator_id      serial NOT NULL,
+    subcriber_id    integer NOT NULL REFERENCES users(user_id),
+    status          status NOT NULL DEFAULT 'PENDING',
+    PRIMARY KEY     (creator_id, subcriber_id)
 );
 
 CREATE TABLE IF NOT EXISTS album (

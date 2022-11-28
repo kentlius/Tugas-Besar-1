@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($error === false) {
-        $query = "INSERT INTO users (email, password, username, isadmin) VALUES ('$email', '" . password_hash($password, PASSWORD_DEFAULT) . "', '$username', false)";
+        $query = "INSERT INTO users (email, password, username) VALUES ('$email', '" . password_hash($password, PASSWORD_DEFAULT) . "', '$username')";
         $conn->exec($query);
         session_unset();
         $_SESSION['username'] = $username;
