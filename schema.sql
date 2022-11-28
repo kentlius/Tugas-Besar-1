@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TYPE status AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED');
 
 CREATE TABLE IF NOT EXISTS subscription (
-    creator_id      serial NOT NULL,
+    creator_id      integer NOT NULL,
     subcriber_id    integer NOT NULL REFERENCES users(user_id),
     status          status NOT NULL DEFAULT 'PENDING',
     PRIMARY KEY     (creator_id, subcriber_id)
