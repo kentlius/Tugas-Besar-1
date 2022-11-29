@@ -1,5 +1,6 @@
 <?php
     require("connect.php");
+    session_start();
     require("template/navbar.php");
 
     $genres = $conn->query("SELECT DISTINCT GENRE FROM song")->fetchAll(PDO::FETCH_ASSOC);
