@@ -11,13 +11,14 @@ require('template/navbar.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/penyanyiPremium.css"/>
-    <link rel="stylesheet" href="css/globals.css">
-    <title>List Penyanyi</title>
+    <link rel="stylesheet" href="css/globals.css"/>
+    <script src="js/getPenyanyiPremium.js" defer></script>
+    <title>List Penyanyi Premium</title>
 </head>
 <body>
     <div class="top-container">
         <?php navbar(); ?>
-        <div class="main">
+        <div class="main" id="main">
             <div class="penyanyi">
                 <p>(No)</p>
                 <p>(Nama penyanyi)</p>
