@@ -31,6 +31,7 @@ function navbar()
             <a href="index.php">Home</a>
             <a href="search.php">Search</a>
             <a href="albums.php">Albums</a>
+            <a href="penyanyiPremium.php">Subscriptions</a>
             $admin_link
         </div>
         <div class="right-navbar">
