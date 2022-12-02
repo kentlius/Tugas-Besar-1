@@ -12,6 +12,7 @@ require('template/navbar.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/premiumSong.css"/>
     <link rel="stylesheet" href="css/globals.css">
+    <script src="js/getPremiumSongs.js" defer></script>
     <title>Lagu Premium</title>
 </head>
 <body>
@@ -26,23 +27,11 @@ require('template/navbar.php');
                 </a>
             </div>
             
-            <div class="penyanyi">
+            <div class="penyanyi" id="penyanyi">
                 <p>(nama penyanyi)</p>
             </div>
-            <table>
-                <tr>
-                    <td>
-                        <p>(No)</p>
-                    </td>
-                    <td style="width: 87%">
-                        <p>(Judul lagu)</p>
-                    </td>
-                    <td style="text-align: right">
-                        <a href="detailLagu.php?song_id=<?= $song['song_id'] ?>"><img src="img/play.png" class="play-but" alt="play" /></a>
-                    </td>
-                </tr>
+            <table id="songs">
             </table>
-
         </div>
     </div>
 

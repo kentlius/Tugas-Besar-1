@@ -19,14 +19,6 @@ require('template/navbar.php');
     <div class="top-container">
         <?php navbar(); ?>
         <div class="main" id="main">
-            <div class="penyanyi">
-                <p>(No)</p>
-                <p>(Nama penyanyi)</p>
-                <button class="subscribe">
-                    Subscribe
-                </button>
-            </div>
-            <div class="penyanyi"></div>
         </div>
     </div>
 
