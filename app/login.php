@@ -10,11 +10,12 @@ $username = $password = $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = test_input($_POST['username']);
     $password = test_input($_POST['password']);
-    $result = $conn->query("SELECT password, isadmin FROM users WHERE username='$username'");
+    $result = $conn->query("SELECT user_id, password, isadmin FROM users WHERE username='$username'");
     $row = $result->fetch(PDO::FETCH_ASSOC);
     if ($row) {
         if (password_verify($password, $row['password'])) {
             session_unset();
+            $_SESSION['userid'] = $row['user_id'];
             $_SESSION['username'] = $username;
             if ($row['isadmin']) {
                 $_SESSION['admin'] = true;
