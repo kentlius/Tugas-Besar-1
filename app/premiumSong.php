@@ -1,7 +1,10 @@
 <?php
-session_start();
 require('connect.php');
 require('template/navbar.php');
+require('session/session_auth.php');
+if(isset($_GET["penyanyi_id"])){
+    $penyanyi_id = $_GET["penyanyi_id"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +19,11 @@ require('template/navbar.php');
     <title>Lagu Premium</title>
 </head>
 <body>
+    <div id="dom-target" style="display: none;">
+        <?php
+            echo htmlspecialchars($penyanyi_id);
+        ?>
+    </div>
     <div class="top-container">
         <?php navbar(); ?>
         <div class="main">
@@ -34,6 +42,16 @@ require('template/navbar.php');
             </table>
         </div>
     </div>
-
+   <div id="popup1" class="overlay">
+	<div class="popup">
+		<h2 id='judul-lagu-popup'>Here i am</h2>
+		<a class="close" href="#">&times;</a>
+		<div class="audio-player">
+            <audio controls autoplay id="audioplay">
+                    <source src='./uploads/audio/HelloFuture.mp3' type='audio/mpeg' id='src-song'>
+            </audio>";
+        </div>
+	</div>
+</div>
 </body>
 </html>
