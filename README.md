@@ -52,7 +52,9 @@ Detail Lagu : 13520006
 Detail Album : 13520006, 13520167  
 Tambah Album : 13520069  
 Tambah Lagu : 13520069  
-List User : 13520069  
+List User : 13520069 
+List Penyanyi Premium: 13520167
+List Lagu Premium: 13520006, 13520069, 13520167
 
 <u>Client-side</u>  
 Login : 13520069  
@@ -65,3 +67,6 @@ Detail Album : 13520006
 Tambah Album : 13520069  
 Tambah Lagu : 13520069  
 List User : 13520069
+List Penyanyi Premium: 13520006
+List Lagu Premium: 13520006
+
