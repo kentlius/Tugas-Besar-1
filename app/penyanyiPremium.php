@@ -1,7 +1,37 @@
 <?php
-session_start();
 require('connect.php');
 require('template/navbar.php');
+require('session/session_auth.php');
+
+// request to soap server
+if(isset($_POST['subscribe'])){
+    $idpenyanyi = $_POST['subscribe'];
+    $idpengguna = $_SESSION['userid'];
+    $opts = array(
+        'http' => array(
+            'user_agent' => 'PHPSoapClient'
+        )
+    );
+    $context = stream_context_create($opts);
+    $soapClientOptions = array(
+        'stream_context' => $context,
+        'cache_wsdl' => WSDL_CACHE_NONE
+    );
+
+    $client = new SoapClient("http://localhost:8000/subscription?wsdl", $soapClientOptions);
+    $request = array(
+        'creator_id' => $idpengguna,
+        'subscriber_id' => $idpenyanyi
+    );
+    try{
+        $response = $client->createSub($request);
+        echo "<script>alert('Berhasil subscribe" . $response->subscription->creator_id . " Sebagai " . $response->subscription->subscriber_id . "')</script>";
+    }catch (Exception $e){
+        echo $e->getMessage();
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>

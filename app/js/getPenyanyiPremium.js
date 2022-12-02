@@ -18,11 +18,12 @@ const renderListPenyanyi = async (data) => {
         card.innerHTML = `
             <p>${i+1}</p>
             <p>${name}</p>
-            <button class="subscribe">
+            <button class="subscribe" name="subscribe" value="${userid}">
                     Subscribe
             </button>
         `;
         main.appendChild(card);
+
     })
 }
 

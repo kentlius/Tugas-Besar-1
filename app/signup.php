@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = "INSERT INTO users (email, password, username) VALUES ('$email', '" . password_hash($password, PASSWORD_DEFAULT) . "', '$username')";
         $conn->exec($query);
         session_unset();
+        $_SESSION['userid'] = $conn->lastInsertId();
         $_SESSION['username'] = $username;
         header("Location: /");
         exit(); 
